@@ -21,6 +21,11 @@ module.exports = {
       }
     })
   ],
+  resolve: {
+    alias: {
+      spectacle: path.resolve("./node_modules/spectacle")
+    }
+  },
 
   module: {
     rules: [
@@ -85,11 +90,5 @@ module.exports = {
         ]
       }
     ]
-  },
-
-  optimization: {
-    minimize: true,
-
-    minimizer: [new UglifyJsPlugin()]
   }
 };

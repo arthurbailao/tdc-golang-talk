@@ -1,22 +1,115 @@
 // Import React
 import React from 'react';
 
-import {
-  Deck,
-} from 'dito-spectacle-theme';
+import Prism from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-go';
+import 'prismjs/themes/prism.css';
 
-import Cover from './cover'
-import { Dito } from './problem'
+import {Deck, Impact, Lists, Content} from 'dito-spectacle-theme';
+import {Appear, Code} from 'spectacle';
+import CodeSlide from 'spectacle-code-slide';
+
+import Cover from './cover';
 
 // Require CSS
 require('normalize.css');
 
+const AppearingList = ({items}) => (
+  <Lists.Unordered>
+    {items.map((item, i) => (
+      <Appear key={i}>
+        <Lists.Item>{item}</Lists.Item>
+      </Appear>
+    ))}
+  </Lists.Unordered>
+);
+
 export default () => (
   <Deck>
     <Cover />
-    <Dito />
+    <Impact text="Previously on Dito" textSuffix="..." />
+    <Content slideTitle="Webhooks Service" slideTitleSuffix=".">
+      <AppearingList
+        items={[
+          'Receber requests HTTP',
+          'Fazer parse JSON',
+          'Aplicar transformações',
+          'Enviar para Kinesis',
+        ]}
+      />
+    </Content>
+    <Content
+      slideTitle="Características do Webhooks Service"
+      slideTitleSuffix=".">
+      <AppearingList
+        items={[
+          'Sateless API',
+          'Picos de requests',
+          'Alta disponibilidade',
+          'Tempo de resposta não é uma prioridade',
+        ]}
+      />
+    </Content>
+    <Impact text="Serverless" textSuffix="!" />
+    <Content slideTitle="Benchmark" slideTitleSuffix=".">
+      <Lists.Unordered>
+        <Appear>
+          <Lists.Item>
+            HTTP POST
+            <p>
+              <Code>{'{"action": "buy"} // Single'}</Code>
+            </p>
+            <p>
+              <Code>{'[{"action": "buy"},...] // Bulk 700 items'}</Code>
+            </p>
+          </Lists.Item>
+        </Appear>
+        <Appear>
+          <Lists.Item>Parse de JSON</Lists.Item>
+        </Appear>
+        <Appear>
+          <Lists.Item>
+            Adicionar a propriedade <Code>received_at</Code>
+          </Lists.Item>
+        </Appear>
+        <Appear>
+          <Lists.Item>
+            Enviar para Kinesis: PartitionKey = UUID, chunks de 500
+          </Lists.Item>
+        </Appear>
+      </Lists.Unordered>
+    </Content>
+    <CodeSlide
+      lang="go"
+      bgColor="#E8EAF2"
+      code={require('raw-loader!../assets/main.go')}
+      style={{fontSize: '1.5em'}}
+      ranges={[
+        {loc: [43, 46]},
+        {loc: [34, 35]},
+        {loc: [34, 42]},
+        {loc: [29, 33]},
+        {loc: [48, 49]},
+        {loc: [49, 51]},
+        {loc: [54, 55]},
+        {loc: [56, 57]},
+        {loc: [62, 63]},
+        {loc: [166, 175]},
+        {loc: [72, 73]},
+        {loc: [73, 75]},
+        {loc: [80, 81]},
+        {loc: [93, 94]},
+        {loc: [99, 100]},
+        {loc: [100, 101]},
+        {loc: [85, 86]},
+        {loc: [85, 86]},
+        {loc: [120, 121]},
+        {loc: [124, 127]}
+      ]}
+    />
   </Deck>
-)
+);
 
 // const SampleImpactText = () => (
 //   <>
