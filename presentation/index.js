@@ -6,16 +6,35 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-go';
 import 'prismjs/themes/prism.css';
 
-import {Deck, Impact, Lists, Content, COLORS} from 'dito-spectacle-theme';
-import {Appear, Image, Code, Slide as SpectacleSlide} from 'spectacle';
-import CodeSlide from 'spectacle-code-slide';
+import {
+  Cover,
+  Deck,
+  Impact,
+  Lists,
+  Content,
+  COLORS,
+} from 'dito-spectacle-theme';
 
-import Cover from './cover';
+import {
+  Appear,
+  Image,
+  Code,
+  Table as SpectacleTable,
+  TableHeader,
+  TableRow,
+  TableHeaderItem,
+  TableBody,
+  TableItem,
+  Slide as SpectacleSlide,
+} from 'spectacle';
+
+import CodeSlide from 'spectacle-code-slide';
 
 // Require CSS
 require('normalize.css');
 
 const images = {
+  cover: require('../assets/images/cover.jpg'),
   whatIsDito1: require('../assets/images/what-is-dito-1.png'),
   whatIsDito2: require('../assets/images/what-is-dito-2.png'),
   whatIsDito3: require('../assets/images/what-is-dito-3.png'),
@@ -24,34 +43,74 @@ const images = {
   webhooksArch2: require('../assets/images/webhooks-arch-2.png'),
   webhooksArch3: require('../assets/images/webhooks-arch-3.png'),
   webhooksArch4: require('../assets/images/webhooks-arch-4.png'),
+  aws: require('../assets/images/aws.png'),
   lambda: require('../assets/images/lambda.png'),
   nodeAndGo: require('../assets/images/node-and-go.png'),
   nodeVsGo: require('../assets/images/node-vs-go.png'),
+  bmLoad: require('../assets/images/bm-load.png'),
+  bmSingle: require('../assets/images/bm-single.png'),
+  bmBulk: require('../assets/images/bm-bulk.png'),
+  gopherPunch: require('../assets/images/gopher-punch.gif'),
 };
 
 const AppearingList = ({items}) => (
   <Lists.Unordered>
     {items.map((item, i) => (
       <Appear key={i}>
-        <Lists.Item>{item}</Lists.Item>
+        <Lists.Item style={{fontSize: '2rem'}}>{item}</Lists.Item>
       </Appear>
     ))}
   </Lists.Unordered>
 );
 
-const ImageSlide = ({src}) => (
-  <SpectacleSlide bgColor={COLORS.DARK_900} align="flex-start center">
-    <Image src={src} />
+const ImageSlide = ({src, width = 1024, bgColor = COLORS.DARK_900}) => (
+  <SpectacleSlide
+    bgColor={bgColor}
+    align="center center"
+    padding={'0 10vw 0 0'}>
+    <Image src={src} width={width} style={{margin: 'auto'}} />
   </SpectacleSlide>
+);
+
+const Table = ({header, rows}) => (
+  <SpectacleTable>
+    <TableHeader>
+      <TableRow>
+        {header.map((item, i) => (
+          <TableHeaderItem key={i}>{item}</TableHeaderItem>
+        ))}
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {rows.map((row, i) => (
+        <TableRow key={`row:${i}`}>
+          {row.map((item, j) => (
+            <TableItem key={`item:${j}`}>{item}</TableItem>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
+  </SpectacleTable>
 );
 
 export default () => (
   <Deck>
-    <Cover />
+    <Cover
+      variant={4}
+      bgSrc={images.cover}
+      title={<span style={{fontSize: "5.5rem"}}>Benchmark Go vs Node em arquitetura Serverless</span>}
+      style={{padding: "0 10vw 0 0"}}
+      titleSuffix="."
+    />
     <Impact
       variant={2}
-      text={<>previously on <strong>Dito</strong></>}
-      textSuffix="..."
+      text={
+        <>
+          o que é a <strong>Dito</strong>
+        </>
+      }
+      textSuffix="?"
+      style={{padding: '0 10vw 0 0'}}
     />
     <ImageSlide src={images.whatIsDito1} />
     <ImageSlide src={images.whatIsDito2} />
@@ -61,7 +120,11 @@ export default () => (
     <ImageSlide src={images.webhooksArch2} />
     <ImageSlide src={images.webhooksArch3} />
     <ImageSlide src={images.webhooksArch4} />
-    <Content slideTitle="Webhooks Service" slideTitleSuffix=".">
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Webhooks Service"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
       <AppearingList
         items={[
           'Receber requests HTTP',
@@ -72,8 +135,10 @@ export default () => (
       />
     </Content>
     <Content
-      slideTitle="Características do Webhooks Service"
-      slideTitleSuffix=".">
+      breadcrumb="TDC2019 BH"
+      slideTitle="Principais características"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
       <AppearingList
         items={[
           'Sateless API',
@@ -87,46 +152,44 @@ export default () => (
       variant={2}
       text={
         <>
-          let's go <strong>Serverless</strong>
+          arquitetura <strong>Serverless</strong>
         </>
       }
       textSuffix="!"
+      style={{padding: '0 10vw 0 0'}}
     />
-    <ImageSlide src={images.lambda} />
+    <ImageSlide src={images.aws} width={400} />
+    <ImageSlide src={images.lambda} width={300} />
     <ImageSlide src={images.nodeAndGo} />
     <ImageSlide src={images.nodeVsGo} />
-    <Content slideTitle="Benchmark" slideTitleSuffix=".">
-      <Lists.Unordered>
-        <Appear>
-          <Lists.Item>
-            HTTP POST
-            <p>
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Benchmark"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
+      <AppearingList
+        items={[
+          <>
+            HTTP POST{' '}
+            <p style={{fontSize: '1.3rem'}}>
               <Code>{'{"action": "buy"} // Single'}</Code>
             </p>
-            <p>
+            <p style={{fontSize: '1.3rem'}}>
               <Code>{'[{"action": "buy"},...] // Bulk 700 items'}</Code>
             </p>
-          </Lists.Item>
-        </Appear>
-        <Appear>
-          <Lists.Item>Parse de JSON</Lists.Item>
-        </Appear>
-        <Appear>
-          <Lists.Item>
-            Adicionar a propriedade <Code>received_at</Code>
-          </Lists.Item>
-        </Appear>
-        <Appear>
-          <Lists.Item>
-            Enviar para Kinesis: PartitionKey = UUID, chunks de 500
-          </Lists.Item>
-        </Appear>
-      </Lists.Unordered>
+          </>,
+          'Parse de JSON',
+          <>
+            Adicionar <Code>received_at</Code>
+          </>,
+          'Enviar para Kinesis: PartitionKey = UUID, chunks de 500',
+        ]}
+      />
     </Content>
     <CodeSlide
       lang="go"
       bgColor={COLORS.WHITE}
-      code={require('raw-loader!../assets/main.go')}
+      code={require('raw-loader!../assets/code/main.go')}
       style={{fontSize: '1.5em'}}
       ranges={[
         {loc: [43, 46]},
@@ -145,117 +208,82 @@ export default () => (
         {loc: [93, 94]},
         {loc: [99, 100]},
         {loc: [100, 101]},
-        {loc: [85, 86]},
+        {loc: [105, 111]},
         {loc: [85, 86]},
         {loc: [120, 121]},
         {loc: [124, 127]},
       ]}
     />
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Experimento"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
+      <AppearingList
+        items={[
+          'Usamos AWS CodeStar: API Gateway + Lambda',
+          'Configurações default: 128mb',
+          'Load Test simultâneo de 15 min - Artillery',
+        ]}
+      />
+    </Content>
+    <ImageSlide src={images.bmLoad} width={900} />
+    <Impact
+      variant={2}
+      text={
+        <>
+          quem <strong>ganhou</strong>
+        </>
+      }
+      textSuffix="?"
+      style={{padding: '0 10vw 0 0'}}
+    />
+    <ImageSlide src={images.bmSingle} width={900} />
+    <ImageSlide src={images.bmBulk} width={900} />
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Tempo de resposta"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
+      <Table
+        header={[null, 'Node', 'Go']}
+        rows={[['Single', '68 ms', '11 ms'], ['Bulk', '514 ms', '379 ms']]}
+      />
+    </Content>
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Custo 100M de datapoints"
+      slideTitleSuffix="."
+      style={{padding: '0 10vw 0 0'}}>
+      <Table
+        header={[null, 'Node', 'Go']}
+        rows={[['Single', '$27', '$21'], ['Bulk', '$0,18', '$0,13']]}
+      />
+    </Content>
+    <Impact
+      variant={2}
+      text={
+        <>
+          Go é cerca de <strong>30% mais barato</strong>
+        </>
+      }
+      textSuffix="!"
+      style={{padding: '0 10vw 0 0'}}
+    />
+    <Content
+      breadcrumb="TDC2019 BH"
+      slideTitle="Além disso"
+      slideTitleSuffix="..."
+      style={{padding: '0 10vw 0 0'}}>
+      <AppearingList
+        items={[
+          'Go é estaticamente tipada e compila muito rápido',
+          'Não existem várias formas de fazer as coisas',
+          'Tem formatador nativo',
+          'Simples de implementar concorrência',
+        ]}
+      />
+    </Content>
+    <ImageSlide src={images.gopherPunch} width={900} bgColor={COLORS.WHITE} />
   </Deck>
 );
-
-// const SampleImpactText = () => (
-//   <>
-//     Os líderes começaram cedo <strong>e hoje lucram alto</strong>
-//   </>
-// );
-
-// const DitoMission = () => (
-//   <>
-//     Com <strong>tecnologia</strong>, empoderar o varejo a{' '}
-//     <strong>conhecer</strong> e se <strong>relacionar</strong> com consumidores
-//     de forma personalizada e escalável para <strong>vender mais</strong>
-//   </>
-// );
-// export default () => (
-//   <Deck>
-//     <Separator number="1" text="Modelos de Capas" />
-//     <Cover
-//       variant={1}
-//       title="Título da Palestra"
-//       subtitle="Nome do Projeto"
-//       titleSuffix="."
-//     />
-//     <Cover
-//       variant={2}
-//       title="Título da Palestra"
-//       subtitle="Nome do Projeto"
-//       titleSuffix="."
-//     />
-//     <Cover
-//       variant={3}
-//       title="Título da Palestra"
-//       subtitle="Nome do Projeto"
-//       titleSuffix="."
-//     />
-//     <Cover
-//       variant={4}
-//       bgBlur="5px"
-//       bgSrc="https://cdn-images-1.medium.com/max/1600/1*RnzDU-OZZSup5PMAcshc4Q.jpeg"
-//       title="Título da Palestra"
-//       subtitle="Nome do Projeto"
-//       titleSuffix="."
-//     />
-//     <Separator number="2" text="Slide normal" />
-//     <Content
-//       breadcrumb="Introdução"
-//       slideTitle="Título ou frase importante"
-//       slideTitleSuffix=".">
-//       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-//       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-//       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-//       commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-//       velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-//       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-//       est laborum.
-//     </Content>
-//     <Content
-//       breadcrumb="Introdução"
-//       slideTitle="Título ou frase importante"
-//       slideTitleSuffix=".">
-//       <Lists.Ordered>
-//         <Lists.Item>
-//           Este é um exemplo de tópico normal. Você pode usá-lo para um momento
-//           que precise colocar mais tópicos, mas lembre-se de não colocar muito
-//           texto, use apenas para lembretes.
-//         </Lists.Item>
-//         <Lists.Item>
-//           Para mudar a cor da bolinha, é só clicar nela. Você pode usar vermelho
-//           para um tópico negativo e amarelo para algo que pode ser melhorado,
-//           caso esteja fazendo uma apresentação de resultados.
-//         </Lists.Item>
-//         <Lists.Item>Exemplo de outro tópico.</Lists.Item>
-//       </Lists.Ordered>
-//     </Content>
-//     <Content
-//       breadcrumb="Introdução"
-//       slideTitle="Título ou frase importante"
-//       slideTitleSuffix=".">
-//       <Lists.Unordered>
-//         <Lists.Item>
-//           Este é um exemplo de tópico normal. Você pode usá-lo para um momento
-//           que precise colocar mais tópicos, mas lembre-se de não colocar muito
-//           texto, use apenas para lembretes.
-//         </Lists.Item>
-//         <Lists.Item>
-//           Para mudar a cor da bolinha, é só clicar nela. Você pode usar vermelho
-//           para um tópico negativo e amarelo para algo que pode ser melhorado,
-//           caso esteja fazendo uma apresentação de resultados.
-//         </Lists.Item>
-//         <Lists.Item>Exemplo de outro tópico.</Lists.Item>
-//       </Lists.Unordered>
-//     </Content>
-//     <Separator number="3" text="Slides de impacto com frases" />
-//     <Impact variant={1} textSuffix="." text={<SampleImpactText />} />
-//     <Impact variant={2} textSuffix="?" text={<SampleImpactText />} />
-//     <Impact variant={3} textSuffix="!" text={<SampleImpactText />} />
-//     <Impact
-//       variant={4}
-//       breadcrumb="Tópico / Missão"
-//       slideTitle="Nossa Missão"
-//       slideTitleSuffix="."
-//       textSuffix="."
-//       text={<DitoMission />}
-//     />
-//   </Deck>
-// );
