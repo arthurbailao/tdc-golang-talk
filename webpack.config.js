@@ -23,7 +23,8 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      spectacle: path.resolve("./node_modules/spectacle")
+      spectacle: path.resolve("./node_modules/spectacle"),
+      prismjs: path.resolve("./node_modules/prismjs")
     }
   },
   module: {

@@ -82,7 +82,7 @@ export default () => (
     </Content>
     <CodeSlide
       lang="go"
-      bgColor="#E8EAF2"
+      bgColor="#FFFFFF"
       code={require('raw-loader!../assets/main.go')}
       style={{fontSize: '1.5em'}}
       ranges={[
@@ -105,7 +105,7 @@ export default () => (
         {loc: [85, 86]},
         {loc: [85, 86]},
         {loc: [120, 121]},
-        {loc: [124, 127]}
+        {loc: [124, 127]},
       ]}
     />
   </Deck>

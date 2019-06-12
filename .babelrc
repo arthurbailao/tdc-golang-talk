@@ -5,13 +5,7 @@
   ],
   "plugins": [
     "react-hot-loader/babel",
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["prismjs", {
-        "languages": ["go"],
-        "plugins": ["line-numbers"],
-        "theme": "twilight",
-        "css": true
-    }]
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
   ],
   "env": {
     "production": {
