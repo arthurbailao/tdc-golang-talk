@@ -1,0 +1,9 @@
+.spectacle-content pre,
+.spectacle-content code {
+  font-family: 'Fira Code', monospace;
+  tab-size: 4;
+}
+
+.spectacle-content .token.comment {
+  display: none;
+}

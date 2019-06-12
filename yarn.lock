@@ -3544,7 +3544,7 @@ dir-glob@2.0.0:
 
 "dito-spectacle-theme@https://github.com/ditointernet/dito-spectacle-theme.git":
   version "1.0.1"
-  resolved "https://github.com/ditointernet/dito-spectacle-theme.git#e6890121b5e68bf56169bececf9ae93968e11d50"
+  resolved "https://github.com/ditointernet/dito-spectacle-theme.git#2d21067b973d0040e97ea80bef5e37c70b3a5995"
   dependencies:
     styled-components "^4.2.0"
 

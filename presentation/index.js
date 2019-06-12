@@ -6,8 +6,11 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-go';
 import 'prismjs/themes/prism.css';
 
+import './styles.css';
+
 import {
-  Cover,
+  Heading,
+  Bar,
   Deck,
   Impact,
   Lists,
@@ -34,7 +37,7 @@ import CodeSlide from 'spectacle-code-slide';
 require('normalize.css');
 
 const images = {
-  cover: require('../assets/images/cover.jpg'),
+  gopher: require('../assets/images/gopher.png'),
   whatIsDito1: require('../assets/images/what-is-dito-1.png'),
   whatIsDito2: require('../assets/images/what-is-dito-2.png'),
   whatIsDito3: require('../assets/images/what-is-dito-3.png'),
@@ -54,10 +57,10 @@ const images = {
 };
 
 const AppearingList = ({items}) => (
-  <Lists.Unordered>
+  <Lists.Unordered textSize="2rem" bulletSize="2.6rem">
     {items.map((item, i) => (
       <Appear key={i}>
-        <Lists.Item style={{fontSize: '2rem'}}>{item}</Lists.Item>
+        <Lists.Item>{item}</Lists.Item>
       </Appear>
     ))}
   </Lists.Unordered>
@@ -93,13 +96,37 @@ const Table = ({header, rows}) => (
   </SpectacleTable>
 );
 
+const Cover = ({title, titleSuffix}) => (
+  <SpectacleSlide bgColor={COLORS.NAVY_700} align="flex-start center">
+    <Heading
+      size={3}
+      fontWeight={700}
+      margin="1rem 0 0"
+      suffix={titleSuffix}
+      textColor={COLORS.WHITE}
+      suffixColor={COLORS.GREEN_500}>
+      {title}
+    </Heading>
+    <Bar width="7vw" margin="2vh 0 0" />
+    <Image
+      src={images.gopher}
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        margin: 'auto',
+        bottom: '-10px',
+      }}
+    />
+  </SpectacleSlide>
+);
+
 export default () => (
   <Deck>
     <Cover
-      variant={4}
-      bgSrc={images.cover}
-      title={<span style={{fontSize: "5.5rem"}}>Benchmark Go vs Node em arquitetura Serverless</span>}
-      style={{padding: "0 10vw 0 0"}}
+      variant={2}
+      title="Benchmark Go vs Node em arquitetura Serverless"
+      style={{padding: '0 10vw 0 0'}}
       titleSuffix="."
     />
     <Impact
@@ -141,7 +168,7 @@ export default () => (
       style={{padding: '0 10vw 0 0'}}>
       <AppearingList
         items={[
-          'Sateless API',
+          'Stateless API',
           'Picos de requests',
           'Alta disponibilidade',
           'Tempo de resposta não é uma prioridade',
@@ -190,7 +217,8 @@ export default () => (
       lang="go"
       bgColor={COLORS.WHITE}
       code={require('raw-loader!../assets/code/main.go')}
-      style={{fontSize: '1.5em'}}
+      showLineNumbers={true}
+      style={{fontSize: '1.7em', padding: '0 10vw 0 0'}}
       ranges={[
         {loc: [43, 46]},
         {loc: [34, 35]},
