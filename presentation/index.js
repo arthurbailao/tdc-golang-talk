@@ -6,14 +6,28 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-go';
 import 'prismjs/themes/prism.css';
 
-import {Deck, Impact, Lists, Content} from 'dito-spectacle-theme';
-import {Appear, Code} from 'spectacle';
+import {Deck, Impact, Lists, Content, COLORS} from 'dito-spectacle-theme';
+import {Appear, Image, Code, Slide as SpectacleSlide} from 'spectacle';
 import CodeSlide from 'spectacle-code-slide';
 
 import Cover from './cover';
 
 // Require CSS
 require('normalize.css');
+
+const images = {
+  whatIsDito1: require('../assets/images/what-is-dito-1.png'),
+  whatIsDito2: require('../assets/images/what-is-dito-2.png'),
+  whatIsDito3: require('../assets/images/what-is-dito-3.png'),
+  whatIsDito4: require('../assets/images/what-is-dito-4.png'),
+  webhooksArch1: require('../assets/images/webhooks-arch-1.png'),
+  webhooksArch2: require('../assets/images/webhooks-arch-2.png'),
+  webhooksArch3: require('../assets/images/webhooks-arch-3.png'),
+  webhooksArch4: require('../assets/images/webhooks-arch-4.png'),
+  lambda: require('../assets/images/lambda.png'),
+  nodeAndGo: require('../assets/images/node-and-go.png'),
+  nodeVsGo: require('../assets/images/node-vs-go.png'),
+};
 
 const AppearingList = ({items}) => (
   <Lists.Unordered>
@@ -25,10 +39,28 @@ const AppearingList = ({items}) => (
   </Lists.Unordered>
 );
 
+const ImageSlide = ({src}) => (
+  <SpectacleSlide bgColor={COLORS.DARK_900} align="flex-start center">
+    <Image src={src} />
+  </SpectacleSlide>
+);
+
 export default () => (
   <Deck>
     <Cover />
-    <Impact text="Previously on Dito" textSuffix="..." />
+    <Impact
+      variant={2}
+      text={<>previously on <strong>Dito</strong></>}
+      textSuffix="..."
+    />
+    <ImageSlide src={images.whatIsDito1} />
+    <ImageSlide src={images.whatIsDito2} />
+    <ImageSlide src={images.whatIsDito3} />
+    <ImageSlide src={images.whatIsDito4} />
+    <ImageSlide src={images.webhooksArch1} />
+    <ImageSlide src={images.webhooksArch2} />
+    <ImageSlide src={images.webhooksArch3} />
+    <ImageSlide src={images.webhooksArch4} />
     <Content slideTitle="Webhooks Service" slideTitleSuffix=".">
       <AppearingList
         items={[
@@ -51,7 +83,18 @@ export default () => (
         ]}
       />
     </Content>
-    <Impact text="Serverless" textSuffix="!" />
+    <Impact
+      variant={2}
+      text={
+        <>
+          let's go <strong>Serverless</strong>
+        </>
+      }
+      textSuffix="!"
+    />
+    <ImageSlide src={images.lambda} />
+    <ImageSlide src={images.nodeAndGo} />
+    <ImageSlide src={images.nodeVsGo} />
     <Content slideTitle="Benchmark" slideTitleSuffix=".">
       <Lists.Unordered>
         <Appear>
@@ -82,7 +125,7 @@ export default () => (
     </Content>
     <CodeSlide
       lang="go"
-      bgColor="#FFFFFF"
+      bgColor={COLORS.WHITE}
       code={require('raw-loader!../assets/main.go')}
       style={{fontSize: '1.5em'}}
       ranges={[
