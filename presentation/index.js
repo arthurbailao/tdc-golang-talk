@@ -58,6 +58,7 @@ const images = {
   bmBulk: require('../assets/images/bm-bulk.png'),
   gopherPunch: require('../assets/images/gopher-punch.gif'),
   ditoAndGopher: require('../assets/images/dito-and-gopher.png'),
+  github: require('../assets/images/github.png'),
 };
 
 const AppearingList = ({items}) => (
@@ -154,13 +155,7 @@ const Thanks = () => (
         </Heading>
       </Fill>
       <Fill style={{minHeight: '100%', margin: '0 0 0 10vw'}}>
-        <Heading
-          size={5}
-          fontWeight={600}
-          margin="1rem 0 0"
-          textColor={COLORS.WHITE}>
-          Github
-        </Heading>
+        <Image src={images.github} width={52} />
         <Heading
           style={{fontSize: '1.6rem'}}
           fontWeight={400}
