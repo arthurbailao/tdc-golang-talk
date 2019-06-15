@@ -1,30 +1,38 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 /* eslint-disable */
 
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  mode: "production",
-  entry: ["@babel/polyfill", "./index"],
+  mode: 'production',
+  entry: ['@babel/polyfill', './index'],
 
   output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/dist/"
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
 
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new CopyPlugin([
+      {
+        from: 'index.html',
+        transform(content) {
+          return Promise.resolve(Buffer.from(content.toString().replace('./dist', '')))
+        }
       }
-    })
+    ])
   ],
   resolve: {
     alias: {
-      spectacle: path.resolve("./node_modules/spectacle")
-    }
+      spectacle: path.resolve('./node_modules/spectacle'),
+      prismjs: path.resolve('./node_modules/prismjs'),
+    },
   },
 
   module: {
@@ -33,62 +41,62 @@ module.exports = {
         test: /\.md$/,
         use: [
           {
-            loader: "html-loader"
+            loader: 'html-loader',
           },
           {
-            loader: "markdown-loader",
+            loader: 'markdown-loader',
 
             options: {
-              gfm: false
-            }
-          }
-        ]
+              gfm: false,
+            },
+          },
+        ],
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
-            loader: "babel-loader"
-          }
-        ]
+            loader: 'babel-loader',
+          },
+        ],
       },
       {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader"
-          }
-        ]
+            loader: 'css-loader',
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
 
             options: {
-              limit: 8192
-            }
-          }
-        ]
+              limit: 8192,
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
 
             options: {
               limit: 10000,
-              mimetype: "image/svg+xml"
-            }
-          }
-        ]
-      }
-    ]
-  }
+              mimetype: 'image/svg+xml',
+            },
+          },
+        ],
+      },
+    ],
+  },
 };

@@ -22,6 +22,9 @@ import {
   Appear,
   Image,
   Code,
+  Layout,
+  Link,
+  Fill,
   Table as SpectacleTable,
   TableHeader,
   TableRow,
@@ -38,6 +41,7 @@ require('normalize.css');
 
 const images = {
   gopher: require('../assets/images/gopher.png'),
+  brands: require('../assets/images/brands.png'),
   whatIsDito1: require('../assets/images/what-is-dito-1.png'),
   whatIsDito2: require('../assets/images/what-is-dito-2.png'),
   whatIsDito3: require('../assets/images/what-is-dito-3.png'),
@@ -46,7 +50,6 @@ const images = {
   webhooksArch2: require('../assets/images/webhooks-arch-2.png'),
   webhooksArch3: require('../assets/images/webhooks-arch-3.png'),
   webhooksArch4: require('../assets/images/webhooks-arch-4.png'),
-  aws: require('../assets/images/aws.png'),
   lambda: require('../assets/images/lambda.png'),
   nodeAndGo: require('../assets/images/node-and-go.png'),
   nodeVsGo: require('../assets/images/node-vs-go.png'),
@@ -76,9 +79,9 @@ const ImageSlide = ({src, width = 1024, bgColor = COLORS.DARK_900}) => (
 );
 
 const Table = ({header, rows}) => (
-  <SpectacleTable>
+  <SpectacleTable style={{borderCollapse: 'collapse', tableLayout: 'fixed'}}>
     <TableHeader>
-      <TableRow>
+      <TableRow style={{borderBottom: `1px solid ${COLORS.DARK_900}`}}>
         {header.map((item, i) => (
           <TableHeaderItem key={i}>{item}</TableHeaderItem>
         ))}
@@ -88,7 +91,11 @@ const Table = ({header, rows}) => (
       {rows.map((row, i) => (
         <TableRow key={`row:${i}`}>
           {row.map((item, j) => (
-            <TableItem key={`item:${j}`}>{item}</TableItem>
+            <TableItem
+              key={`item:${j}`}
+              style={{padding: '20px 0 0 0', textAlign: 'left'}}>
+              {item}
+            </TableItem>
           ))}
         </TableRow>
       ))}
@@ -121,6 +128,65 @@ const Cover = ({title, titleSuffix}) => (
   </SpectacleSlide>
 );
 
+const Thanks = () => (
+  <SpectacleSlide bgColor={COLORS.NAVY_700} align="flex-start flex-start">
+    <Layout style={{paddingTop: '25vh'}}>
+      <Fill>
+        <Heading
+          size={3}
+          fontWeight={700}
+          margin="1rem 0 0"
+          suffix="!"
+          textColor={COLORS.WHITE}
+          suffixColor={COLORS.GREEN_500}>
+          Obrigado
+        </Heading>
+        <Bar width="7vw" margin="2vh 0 0" />
+        <Heading
+          size={5}
+          fontWeight={600}
+          margin="1rem 0 0"
+          textColor={COLORS.WHITE}>
+          <Link href="https://tdc.bailao.dev" textColor={COLORS.WHITE}>
+            tdc.bailao.dev
+          </Link>
+        </Heading>
+      </Fill>
+      <Fill style={{minHeight: '100%', margin: '0 0 0 10vw'}}>
+        <Heading
+          size={5}
+          fontWeight={600}
+          margin="1rem 0 0"
+          textColor={COLORS.WHITE}>
+          Github
+        </Heading>
+        <Heading
+          style={{fontSize: '1.6rem'}}
+          fontWeight={400}
+          margin="1rem 0 0"
+          textColor={COLORS.WHITE}>
+          <Link
+            href="https://github.com/ditointernet/aws-lambda-go-bm"
+            textColor={COLORS.WHITE}>
+            ditointernet/aws-lambda-go-bm
+          </Link>
+        </Heading>
+        <Heading
+          style={{fontSize: '1.6rem'}}
+          fontWeight={400}
+          margin="1rem 0 0"
+          textColor={COLORS.WHITE}>
+          <Link
+            href="https://github.com/ditointernet/aws-lambda-node-bm"
+            textColor={COLORS.WHITE}>
+            ditointernet/aws-lambda-node-bm
+          </Link>
+        </Heading>
+      </Fill>
+    </Layout>
+  </SpectacleSlide>
+);
+
 export default () => (
   <Deck>
     <Cover
@@ -133,12 +199,24 @@ export default () => (
       variant={2}
       text={
         <>
+          eu sou o Arthur <strong>Bailão</strong>,<br />
+          Head de Engenharia da Dito
+        </>
+      }
+      textSuffix="."
+      style={{padding: '0 10vw 0 0'}}
+    />
+    <Impact
+      variant={2}
+      text={
+        <>
           o que é a <strong>Dito</strong>
         </>
       }
       textSuffix="?"
       style={{padding: '0 10vw 0 0'}}
     />
+    <ImageSlide src={images.brands} bgColor={COLORS.WHITE} width={800} />
     <ImageSlide src={images.whatIsDito1} />
     <ImageSlide src={images.whatIsDito2} />
     <ImageSlide src={images.whatIsDito3} />
@@ -171,7 +249,7 @@ export default () => (
           'Stateless API',
           'Picos de requests',
           'Alta disponibilidade',
-          'Tempo de resposta não é uma prioridade',
+          'Tempo de resposta não é uma prioridade 🤔',
         ]}
       />
     </Content>
@@ -185,7 +263,6 @@ export default () => (
       textSuffix="!"
       style={{padding: '0 10vw 0 0'}}
     />
-    <ImageSlide src={images.aws} width={400} />
     <ImageSlide src={images.lambda} width={300} />
     <ImageSlide src={images.nodeAndGo} />
     <ImageSlide src={images.nodeVsGo} />
@@ -313,5 +390,6 @@ export default () => (
       />
     </Content>
     <ImageSlide src={images.gopherPunch} width={900} bgColor={COLORS.WHITE} />
+    <Thanks />
   </Deck>
 );
