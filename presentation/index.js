@@ -57,6 +57,7 @@ const images = {
   bmSingle: require('../assets/images/bm-single.png'),
   bmBulk: require('../assets/images/bm-bulk.png'),
   gopherPunch: require('../assets/images/gopher-punch.gif'),
+  ditoAndGopher: require('../assets/images/dito-and-gopher.png'),
 };
 
 const AppearingList = ({items}) => (
@@ -286,7 +287,7 @@ export default () => (
           <>
             Adicionar <Code>received_at</Code>
           </>,
-          'Enviar para Kinesis: PartitionKey = UUID, chunks de 500',
+          'Enviar para o Kinesis em chunks de 500',
         ]}
       />
     </Content>
@@ -317,6 +318,10 @@ export default () => (
         {loc: [85, 86]},
         {loc: [120, 121]},
         {loc: [124, 127]},
+        {loc: [130, 133]},
+        {loc: [183, 184]},
+        {loc: [184, 197]},
+        {loc: [197, 200]},
       ]}
     />
     <Content
@@ -337,7 +342,7 @@ export default () => (
       variant={2}
       text={
         <>
-          quem <strong>ganhou</strong>
+          qual foi o <strong>resultado</strong>
         </>
       }
       textSuffix="?"
@@ -352,7 +357,7 @@ export default () => (
       style={{padding: '0 10vw 0 0'}}>
       <Table
         header={[null, 'Node', 'Go']}
-        rows={[['Single', '68 ms', '11 ms'], ['Bulk', '514 ms', '379 ms']]}
+        rows={[['Single', '85 ms', '11 ms'], ['Bulk', '514 ms', '379 ms']]}
       />
     </Content>
     <Content
@@ -390,6 +395,7 @@ export default () => (
       />
     </Content>
     <ImageSlide src={images.gopherPunch} width={900} bgColor={COLORS.WHITE} />
+    <ImageSlide src={images.ditoAndGopher} width={700} bgColor={COLORS.NAVY_700} />
     <Thanks />
   </Deck>
 );
